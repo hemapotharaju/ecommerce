@@ -1,0 +1,13 @@
+<div class="card">
+  {% if p.is_offer %}<span class="badge">OFFER</span>{% endif %}
+  <a href="/product/{{ p.id }}"><img src="{{ p.image_url or 'https://via.placeholder.com/400' }}" alt="{{ p.name }}" loading="lazy"></a>
+  <div class="cbody">
+    <small class="cat">{{ p.category }} ★ {{ p.rating }}</small>
+    <a class="t" href="/product/{{ p.id }}">{{ p.name }}</a>
+    <div class="price">₹{{ p.price }} {% if p.mrp and p.mrp > p.price %}<s>₹{{ p.mrp }}</s><span class="off">{{ ((p.mrp-p.price)*100/p.mrp)|round|int }}% off</span>{% endif %}</div>
+    <div class="row">
+      <a class="btn small" href="/product/{{ p.id }}">View</a>
+      <a class="btn small dark" href="/cart/add/{{ p.id }}"><i class="fa fa-cart-plus"></i> Add</a>
+    </div>
+  </div>
+</div>

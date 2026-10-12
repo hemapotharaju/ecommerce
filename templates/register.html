@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Register{% endblock %}{% block content %}
+<div class="auth"><h2>Create Account</h2><p class="mut">Join ShopEase for fast checkout</p>
+<form method="post">
+<label>Full Name</label><input name="name" required placeholder="Your name">
+<label>Email</label><input name="email" type="email" required placeholder="you@mail.com">
+<label>Password</label><input name="password" type="password" required minlength="4" placeholder="Min 4 chars">
+<button class="btn dark full">Register</button></form>
+<p class="mut">Have an account? <a href="/login">Login</a></p></div>
+{% endblock %}

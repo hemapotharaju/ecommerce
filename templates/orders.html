@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Orders{% endblock %}{% block content %}
+<h2 class="sec">My Orders</h2>
+<div class="olist">{% for o in orders %}
+<a class="ocard" href="/order/{{ o.id }}"><div><b>#{{ o.id }}</b> • {{ o.created_at }}<br><small>{{ o.payment_method }} • {{ o.status }}</small></div><div class="price">₹{{ o.total }}</div><span class="pill {{ o.status|lower|replace(' ','-') }}">{{ o.status }}</span></a>
+{% else %}<p>No orders yet. <a href="/">Shop now →</a></p>{% endfor %}</div>
+{% endblock %}

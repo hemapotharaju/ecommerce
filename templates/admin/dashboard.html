@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% block title %}Admin{% endblock %}{% block content %}
+<h2 class="sec">Admin Dashboard</h2>
+<div class="stats">
+<div class="stat"><b>{{ stats.products }}</b><span>Products</span></div>
+<div class="stat"><b>{{ stats.orders }}</b><span>Orders</span></div>
+<div class="stat"><b>{{ stats.users }}</b><span>Users</span></div>
+<div class="stat"><b>₹{{ stats.revenue }}</b><span>Revenue</span></div>
+</div>
+<div class="admintool">
+<form method="get" class="search"><input name="q" placeholder="Search products..." value="{{ q }}"><button class="btn small dark">Search</button></form>
+<a href="/admin/product/new" class="btn dark">+ Add Product</a>
+</div>
+<div class="tablewrap"><table>
+<tr><th>ID</th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Offer</th><th>Actions</th></tr>
+{% for p in products %}<tr>
+<td>{{ p.id }}</td><td><img class="thumb" src="{{ p.image_url or 'https://via.placeholder.com/100' }}"> {{ p.name }}</td>
+<td>{{ p.category }}</td><td>₹{{ p.price }}</td><td>{{ p.stock }}</td><td>{% if p.is_offer %}Yes{% else %}—{% endif %}</td>
+<td><a href="/admin/product/{{ p.id }}/edit" class="btn small">Edit</a> <a href="/admin/product/{{ p.id }}/delete" class="btn small danger" onclick="return confirm('Delete?')">Delete</a></td>
+</tr>{% endfor %}</table></div>
+<h2 class="sec">Recent Orders</h2>
+<div class="tablewrap"><table>
+<tr><th>ID</th><th>Customer</th><th>Total</th><th>Payment</th><th>Status</th><th>Update</th></tr>
+{% for o in recent %}<tr><td>#{{ o.id }}</td><td>{{ o.name }}</td><td>₹{{ o.total }}</td><td>{{ o.payment_method }}</td><td>{{ o.status }}</td>
+<td><form action="/admin/order/{{ o.id }}/status" method="post" class="row"><select name="status">{% for s in statuses %}<option {% if s==o.status %}selected{% endif %}>{{ s }}</option>{% endfor %}</select><button class="btn small dark">Save</button></form></td></tr>{% endfor %}</table></div>
+{% endblock %}

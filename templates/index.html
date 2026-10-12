@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% block title %}Home{% endblock %}{% block content %}
+<section class="hero">
+  <div><h1>Big Sale — Up to <span>60% OFF</span></h1>
+  <p>Electronics, Fashion, Home & more. Free delivery over ₹499.</p>
+  <a href="#products" class="btn">Shop Now</a> <a href="/?offer=1" class="btn ghost">Today's Offers</a></div>
+  <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=700" alt="sale">
+</section>
+{% if offers %}
+<h2 class="sec"><i class="fa fa-fire"></i> Today's Offers</h2>
+<div class="grid">
+{% for p in offers %}{% include "card.html" %}{% endfor %}
+</div>{% endif %}
+<section class="toolbar" id="products">
+  <h2 class="sec">Products {% if cat %}— {{ cat }}{% endif %} {% if q %}“{{ q }}”{% endif %}</h2>
+  <form method="get" class="sort">
+    {% if q %}<input type="hidden" name="q" value="{{ q }}">{% endif %}
+    {% if cat %}<input type="hidden" name="category" value="{{ cat }}">{% endif %}
+    <select name="sort" onchange="this.form.submit()">
+      <option value="new" {% if sort=='new' %}selected{% endif %}>Newest</option>
+      <option value="low" {% if sort=='low' %}selected{% endif %}>Price: Low → High</option>
+      <option value="high" {% if sort=='high' %}selected{% endif %}>Price: High → Low</option>
+      <option value="rating" {% if sort=='rating' %}selected{% endif %}>Top Rated</option>
+    </select>
+  </form>
+</section>
+<div class="grid">
+{% for p in products %}{% include "card.html" %}{% else %}
+<p>No products found. Try another search.</p>{% endfor %}
+</div>
+{% endblock %}

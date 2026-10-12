@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Login{% endblock %}{% block content %}
+<div class="auth"><h2>Welcome Back</h2><p class="mut">Login to shop & track orders</p>
+<form method="post"><input type="hidden" name="next" value="{{ request.args.get('next','') }}">
+<label>Email</label><input name="email" type="email" required placeholder="you@mail.com">
+<label>Password</label><input name="password" type="password" required placeholder="••••••">
+<button class="btn dark full">Login</button></form>
+<p class="mut">New here? <a href="/register">Create account</a></p>
+<p class="mut">Demo admin: <b>admin@shop.com / admin123</b></p></div>
+{% endblock %}

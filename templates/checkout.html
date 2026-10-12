@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Checkout{% endblock %}{% block content %}
+<h2 class="sec">Checkout</h2>
+<div class="cartwrap">
+<form method="post" class="auth wide">
+<label>Full Name</label><input name="name" value="{{ user.name }}" required>
+<label>Phone</label><input name="phone" required placeholder="10-digit mobile">
+<label>Delivery Address</label><textarea name="address" required placeholder="House no, street, city, pincode"></textarea>
+<label>Payment Method</label>
+<div class="pays">{% for pay in payments %}<label class="pay"><input type="radio" name="payment" value="{{ pay }}" {% if loop.first %}checked{% endif %}> {{ pay }}</label>{% endfor %}</div>
+<button class="btn dark full">Place Order • ₹{{ total }}</button></form>
+<aside class="bill"><h3>Order Summary ({{ items|length }})</h3>{% for i in items %}<p>{{ i.name }} × {{ i.qty }} <span>₹{{ i.price*i.qty }}</span></p>{% endfor %}<hr><h3>Total <span>₹{{ total }}</span></h3></aside>
+</div>{% endblock %}

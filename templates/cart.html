@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block title %}Cart{% endblock %}{% block content %}
+<h2 class="sec"><i class="fa fa-cart-shopping"></i> Your Cart ({{ items|length }})</h2>
+{% if items %}
+<div class="cartwrap">
+<div class="clist">{% for i in items %}
+<div class="citem">
+<img src="{{ i.image_url or 'https://via.placeholder.com/200' }}">
+<div><a href="/product/{{ i.id }}"><b>{{ i.name }}</b></a><div class="price">₹{{ i.price }} × {{ i.qty }} = ₹{{ i.price*i.qty }}</div>
+<form action="/cart/update/{{ i.cid }}" method="post" class="row"><input type="number" name="qty" value="{{ i.qty }}" min="1" class="qty"><button class="btn small">Update</button><a class="del" href="/cart/remove/{{ i.cid }}">Remove</a></form></div>
+</div>{% endfor %}</div>
+<aside class="bill"><h3>Bill Details</h3><p>Subtotal <span>₹{{ total }}</span></p><p>You Save <span class="green">₹{{ saving|round(2) }}</span></p><p>Delivery <span class="green">{% if total>499 %}FREE{% else %}₹40{% endif %}</span></p><hr><h3>Total <span>₹{{ total if total>499 else total+40 }}</span></h3><a href="/checkout" class="btn dark full">Proceed to Checkout</a></aside>
+</div>{% else %}<p>Cart is empty. <a href="/">Continue shopping →</a></p>{% endif %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Order #{{ o.id }}{% endblock %}{% block content %}
+<h2 class="sec">Order #{{ o.id }} <span class="pill {{ o.status|lower|replace(' ','-') }}">{{ o.status }}</span></h2>
+<div class="track">{% for s in statuses %}<div class="step {% if loop.index0<=progress and o.status!='Cancelled' %}done{% endif %}"><span></span>{{ s }}</div>{% endfor %}</div>
+<div class="cartwrap"><div>
+{% for i in items %}<div class="citem"><img src="{{ i.image_url or 'https://via.placeholder.com/200' }}"><div><b>{{ i.name }}</b><div>Qty {{ i.qty }} × ₹{{ i.price }} = ₹{{ i.qty*i.price }}</div></div></div>{% endfor %}
+<p><b>Deliver to:</b> {{ o.name }}, {{ o.address }} ({{ o.phone }})</p><p><b>Payment:</b> {{ o.payment_method }} • <b>Total:</b> ₹{{ o.total }}</p>
+</div><aside class="bill"><h3>Need help?</h3><p>Contact support@shopease.com</p><a href="/orders" class="btn full">Back to Orders</a></aside></div>
+{% endblock %}

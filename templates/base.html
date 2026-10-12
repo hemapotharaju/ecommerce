@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}ShopEase{% endblock %} | ShopEase</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="/"><i class="fa fa-bag-shopping"></i> ShopEase</a>
+  <form class="search" action="/" method="get">
+    <input name="q" id="searchBox" placeholder="Search products, brands, categories..." value="{{ request.args.get('q','') }}" autocomplete="off">
+    <button><i class="fa fa-search"></i></button>
+    <div id="suggest"></div>
+  </form>
+  <nav class="links">
+    <a href="/">Home</a>
+    <a href="/?offer=1">Offers</a>
+    {% if user %}
+      <a href="/cart"><i class="fa fa-cart-shopping"></i> Cart ({{ cart_count }})</a>
+      <a href="/orders">Orders</a>
+      {% if user.is_admin %}<a class="admin" href="/admin">Admin</a>{% endif %}
+      <span class="hi">Hi, {{ user.name.split(' ')[0] }}</span>
+      <a href="/logout" class="btn small">Logout</a>
+    {% else %}
+      <a href="/login">Login</a>
+      <a href="/register" class="btn small">Sign Up</a>
+    {% endif %}
+  </nav>
+  <button class="menu" onclick="document.querySelector('.links').classList.toggle('open')"><i class="fa fa-bars"></i></button>
+</header>
+<div class="catbar">
+  <a href="/" class="{% if not cat %}on{% endif %}">All</a>
+  {% for c in categories %}<a href="/?category={{ c }}" class="{% if cat==c %}on{% endif %}">{{ c }}</a>{% endfor %}
+</div>
+{% with m = get_flashed_messages(with_categories=true) %}
+{% if m %}<div class="flashwrap">{% for c,t in m %}<div class="flash {{ c }}">{{ t }}</div>{% endfor %}</div>{% endif %}
+{% endwith %}
+<main>{% block content %}{% endblock %}</main>
+<footer><p>© 2026 ShopEase • Flask + MySQL E-Commerce • Admin: <b>admin@shop.com / admin123</b></p></footer>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

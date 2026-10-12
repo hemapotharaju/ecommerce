@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block title %}{{ p.name }}{% endblock %}{% block content %}
+<div class="detail">
+  <img src="{{ p.image_url or 'https://via.placeholder.com/500' }}" alt="{{ p.name }}">
+  <div>
+    <small class="cat">{{ p.category }}</small>
+    <h1>{{ p.name }}</h1>
+    <p>★ {{ p.rating }} rating • {{ p.stock }} in stock</p>
+    <div class="price big">₹{{ p.price }} {% if p.mrp and p.mrp>p.price %}<s>₹{{ p.mrp }}</s><span class="off">{{ ((p.mrp-p.price)*100/p.mrp)|round|int }}% OFF</span>{% endif %}</div>
+    <p class="desc">{{ p.description }}</p>
+    <p>🚚 Free delivery • 💵 COD available • ↩️ 7-day returns</p>
+    <form action="/cart/add/{{ p.id }}" method="post" class="row">
+      <input type="number" name="qty" value="1" min="1" max="{{ p.stock }}" class="qty">
+      <button class="btn dark"><i class="fa fa-cart-plus"></i> Add to Cart</button>
+      <a class="btn" href="/cart/add/{{ p.id }}?qty=1">Buy Now</a>
+    </form>
+  </div>
+</div>
+<h2 class="sec">Related Products</h2>
+<div class="grid">{% for p in related %}{% include "card.html" %}{% endfor %}</div>
+{% endblock %}
